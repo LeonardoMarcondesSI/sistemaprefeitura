@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Excluir pedido · Obras{% endblock %}
+{% block breadcrumb %}Excluir pedido{% endblock %}
+{% block content %}
+<div class="confirm-layout entrance">
+  <a class="return-link" href="{% url 'compras:pedido_lista' %}"><span aria-hidden="true">←</span> Voltar aos pedidos</a>
+  <div class="confirm-sheet">
+    <div class="section-kicker"><span class="kicker-line"></span> PEDIDO #{{ pedido.pk|stringformat:"04d" }} / EXCLUSÃO</div>
+    <div class="confirm-symbol" aria-hidden="true">×</div>
+    <h1>Excluir este pedido<span class="title-dot">?</span></h1>
+    <p>O registro de <strong>{{ pedido.solicitante }}</strong> para <strong>{{ pedido.destino }}</strong> será retirado da lista de pedidos.</p>
+    <div class="confirm-summary"><span>MATERIAL REGISTRADO</span><strong>{{ pedido.item.descricao }}</strong><small>{{ pedido.quantidade|floatformat:-4 }} {{ pedido.item.unidade }} · Processo {{ pedido.item.processo.numero }}</small></div>
+    <form method="post" class="confirm-actions">
+      {% csrf_token %}
+      <a class="secondary-button" href="{% url 'compras:pedido_lista' %}">Manter pedido</a>
+      <button class="danger-button" type="submit">Excluir pedido <span aria-hidden="true">↗</span></button>
+    </form>
+  </div>
+</div>
+{% endblock %}

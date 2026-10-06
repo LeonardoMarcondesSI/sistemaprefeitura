@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}Painel · Obras{% endblock %}
+{% block breadcrumb %}Visão geral{% endblock %}
+{% block content %}
+<section class="hero entrance">
+  <div class="hero-content">
+    <div class="section-kicker light"><span class="kicker-line"></span> PAINEL / VISÃO GERAL</div>
+    <h1>Materiais em ordem.<br><em>Pedidos sob controle.</em></h1>
+    <p>Um lugar para acompanhar as solicitações de material e manter cada pedido ligado ao item e ao fornecedor cadastrados.</p>
+    <a class="action-button action-button-light" href="{% url 'compras:pedido_criar' %}">Registrar pedido <span aria-hidden="true">↗</span></a>
+  </div>
+  <div class="hero-drawing" aria-hidden="true">
+    <svg viewBox="0 0 460 360" fill="none">
+      <circle cx="265" cy="168" r="130" stroke="currentColor" stroke-width=".8" stroke-dasharray="4 8"/>
+      <circle cx="265" cy="168" r="99" stroke="currentColor" stroke-width=".8"/>
+      <path d="M53 287H430M265 0V355M54 168H450" stroke="currentColor" stroke-width=".7" stroke-dasharray="3 6"/>
+      <rect x="156" y="88" width="216" height="163" rx="2" stroke="currentColor"/>
+      <path d="M156 128H372M156 211H372M203 88V251M315 88V251M203 128L315 211M315 128L203 211" stroke="currentColor" stroke-width=".9"/>
+      <path d="M137 88h-12v163h12M156 69V57h216v12" stroke="currentColor" stroke-width=".8"/>
+      <circle cx="156" cy="88" r="4" fill="currentColor"/><circle cx="372" cy="251" r="4" fill="currentColor"/>
+      <path d="M118 286h92M333 286h60M404 85h32" stroke="currentColor" stroke-width=".8"/>
+    </svg>
+    <span class="drawing-label label-top">PLANTA / 01</span>
+    <span class="drawing-label label-bottom">CONTROLE DE MATERIAIS · 2026</span>
+  </div>
+  <span class="hero-corner" aria-hidden="true">01 — 04</span>
+</section>
+
+<section class="ledger entrance delay-one" aria-label="Resumo dos registros">
+  <div class="ledger-item primary">
+    <span class="ledger-label">01 / PEDIDOS REGISTRADOS</span>
+    <div class="ledger-value">{{ total_pedidos|stringformat:"02d" }}<span class="ledger-accent">.</span></div>
+    <span class="ledger-note">Solicitações no sistema</span>
+  </div>
+  <div class="ledger-item">
+    <span class="ledger-label">02 / PROCESSOS</span>
+    <div class="ledger-value">{{ total_processos|stringformat:"02d" }}</div>
+    <span class="ledger-note">Referências cadastradas</span>
+  </div>
+  <div class="ledger-item">
+    <span class="ledger-label">03 / ITENS</span>
+    <div class="ledger-value">{{ total_itens|stringformat:"02d" }}</div>
+    <span class="ledger-note">{{ total_fornecedores }} fornecedor{{ total_fornecedores|pluralize:"es" }}</span>
+  </div>
+  <div class="ledger-item amount">
+    <span class="ledger-label">04 / VALOR ESTIMADO</span>
+    <div class="ledger-value"><small>R$</small> {{ valor_total|floatformat:2 }}</div>
+    <span class="ledger-note">Total dos pedidos cadastrados</span>
+  </div>
+</section>
+
+<section class="section-heading entrance delay-two">
+  <div><div class="section-kicker"><span class="kicker-line"></span> ACOMPANHAMENTO</div><h2>Atividade recente<span class="title-dot">.</span></h2><p>Os últimos pedidos registrados no sistema.</p></div>
+  <a class="quiet-link" href="{% url 'compras:pedido_lista' %}">Ver todos os pedidos <span aria-hidden="true">↗</span></a>
+</section>
+
+<section class="data-panel entrance delay-three">
+  {% if pedidos_recentes %}
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>PEDIDO</th><th>SOLICITANTE</th><th>ITEM / PROCESSO</th><th>FORNECEDOR</th><th>QUANTIDADE</th></tr></thead>
+        <tbody>
+          {% for pedido in pedidos_recentes %}
+          <tr>
+            <td><span class="row-id">#{{ pedido.pk|stringformat:"04d" }}</span><span class="cell-note">{{ pedido.criado_em|date:"d/m/Y" }}</span></td>
+            <td><span class="cell-main">{{ pedido.solicitante }}</span><span class="cell-note">{{ pedido.destino }}</span></td>
+            <td><span class="cell-main">{{ pedido.item.descricao }}</span><span class="cell-note">PROCESSO {{ pedido.item.processo.numero }} · ITEM {{ pedido.item.numero|stringformat:"04d" }}</span></td>
+            <td>{{ pedido.item.fornecedor.nome }}</td>
+            <td class="quantity">{{ pedido.quantidade|floatformat:-4 }} <span>{{ pedido.item.unidade }}</span></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="empty-state">
+      <span class="empty-number">00</span>
+      <h3>O registro começa aqui.</h3>
+      <p>Cadastre o primeiro pedido para acompanhar as solicitações nesta página.</p>
+      <a class="action-button" href="{% url 'compras:pedido_criar' %}">Criar primeiro pedido <span aria-hidden="true">↗</span></a>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

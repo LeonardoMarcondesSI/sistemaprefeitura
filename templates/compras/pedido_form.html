@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}{{ titulo }} · Obras{% endblock %}
+{% block breadcrumb %}{{ titulo }}{% endblock %}
+{% block content %}
+<div class="form-layout">
+  <div class="form-context entrance">
+    <a class="return-link" href="{% url 'compras:pedido_lista' %}"><span aria-hidden="true">←</span> Voltar aos pedidos</a>
+    <div class="section-kicker"><span class="kicker-line"></span> SOLICITAÇÃO / FORMULÁRIO</div>
+    <h1>{{ titulo }}<span class="title-dot">.</span></h1>
+    <p>Registre quem solicitou o material, o local de uso e o item correspondente ao processo.</p>
+    <div class="context-rule"></div>
+    <div class="context-note"><span class="context-note-mark">i</span><span>O fornecedor é definido pelo item cadastrado. Confira essa informação antes de salvar.</span></div>
+  </div>
+
+  <form method="post" class="form-sheet entrance delay-one" novalidate>
+    {% csrf_token %}
+    {% if form.non_field_errors %}<div class="form-alert">{{ form.non_field_errors }}</div>{% endif %}
+
+    <div class="sheet-section">
+      <div class="sheet-heading"><span class="sheet-number">01</span><div><h2>Origem do pedido</h2><p>Quem solicitou e onde será usado.</p></div></div>
+      <div class="field-grid">
+        <div class="field">
+          <label for="{{ form.solicitante.id_for_label }}">{{ form.solicitante.label }}</label>
+          {{ form.solicitante }}{% if form.solicitante.errors %}<small class="field-error">{{ form.solicitante.errors|striptags }}</small>{% endif %}
+        </div>
+        <div class="field">
+          <label for="{{ form.pessoa_retirada.id_for_label }}">{{ form.pessoa_retirada.label }}</label>
+          {{ form.pessoa_retirada }}{% if form.pessoa_retirada.errors %}<small class="field-error">{{ form.pessoa_retirada.errors|striptags }}</small>{% endif %}
+        </div>
+        <div class="field">
+          <label for="{{ form.destino.id_for_label }}">{{ form.destino.label }}</label>
+          {{ form.destino }}{% if form.destino.errors %}<small class="field-error">{{ form.destino.errors|striptags }}</small>{% endif %}
+        </div>
+        <div class="field field-wide">
+          <label for="{{ form.finalidade.id_for_label }}">{{ form.finalidade.label }}</label>
+          {{ form.finalidade }}{% if form.finalidade.errors %}<small class="field-error">{{ form.finalidade.errors|striptags }}</small>{% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet-section">
+      <div class="sheet-heading"><span class="sheet-number">02</span><div><h2>Material solicitado</h2><p>Escolha o item e informe a quantidade.</p></div></div>
+      <div class="field-grid">
+        <div class="field field-wide">
+          <label for="{{ form.item.id_for_label }}">{{ form.item.label }}</label>
+          {{ form.item }}{% if form.item.errors %}<small class="field-error">{{ form.item.errors|striptags }}</small>{% endif %}
+          <small class="field-help">A descrição inclui processo, item e fornecedor.</small>
+        </div>
+        <div class="field">
+          <label for="{{ form.quantidade.id_for_label }}">{{ form.quantidade.label }}</label>
+          {{ form.quantidade }}{% if form.quantidade.errors %}<small class="field-error">{{ form.quantidade.errors|striptags }}</small>{% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet-actions">
+      <a class="secondary-button" href="{% url 'compras:pedido_lista' %}">Cancelar</a>
+      <button class="action-button" type="submit">{{ botao }} <span aria-hidden="true">↗</span></button>
+    </div>
+  </form>
+</div>
+{% endblock %}

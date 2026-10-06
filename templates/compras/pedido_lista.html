@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Pedidos · Obras{% endblock %}
+{% block breadcrumb %}Pedidos{% endblock %}
+{% block content %}
+<div class="page-intro entrance">
+  <div class="section-kicker"><span class="kicker-line"></span> REGISTRO / 02</div>
+  <div class="intro-row">
+    <div><h1>Registro de pedidos<span class="title-dot">.</span></h1><p>Quem solicitou, qual item foi escolhido e onde o material será usado.</p></div>
+    <a class="action-button" href="{% url 'compras:pedido_criar' %}">Novo pedido <span aria-hidden="true">↗</span></a>
+  </div>
+</div>
+
+<section class="list-toolbar entrance delay-one" aria-label="Ferramentas da lista">
+  <div class="list-total"><strong>{{ pedidos|length|stringformat:"02d" }}</strong><span>pedido{{ pedidos|length|pluralize }} cadastrado{{ pedidos|length|pluralize }}</span></div>
+  {% if pedidos %}<label class="search-box">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+    <span class="visually-hidden">Buscar nesta lista</span>
+    <input type="search" placeholder="Buscar pedido nesta lista" data-search-input autocomplete="off">
+    <kbd>⌕</kbd>
+  </label>{% endif %}
+</section>
+
+<section class="data-panel entrance delay-two">
+  {% if pedidos %}
+    <div class="table-scroll">
+      <table class="order-table">
+        <thead><tr><th>PEDIDO / DATA</th><th>SOLICITANTE / DESTINO</th><th>ITEM / PROCESSO</th><th>FORNECEDOR</th><th>QUANTIDADE</th><th>ESTIMATIVA</th><th>AÇÕES</th></tr></thead>
+        <tbody>
+          {% for pedido in pedidos %}
+          <tr data-search-row>
+            <td><span class="row-id">#{{ pedido.pk|stringformat:"04d" }}</span><span class="cell-note">{{ pedido.criado_em|date:"d/m/Y" }}</span></td>
+            <td><span class="cell-main">{{ pedido.solicitante }}</span><span class="cell-note">{{ pedido.destino }}</span></td>
+            <td><span class="cell-main">{{ pedido.item.descricao }}</span><span class="cell-note">PROC. {{ pedido.item.processo.numero }} · ITEM {{ pedido.item.numero|stringformat:"04d" }}</span></td>
+            <td>{{ pedido.item.fornecedor.nome }}</td>
+            <td class="quantity">{{ pedido.quantidade|floatformat:-4 }} <span>{{ pedido.item.unidade }}</span></td>
+            <td class="value">R$ {{ pedido.valor_estimado|floatformat:2 }}</td>
+            <td><div class="row-actions"><a href="{% url 'compras:pedido_editar' pedido.pk %}">Editar</a><a class="delete-link" href="{% url 'compras:pedido_excluir' pedido.pk %}">Excluir</a></div></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="no-results" data-no-results hidden>Nenhum pedido corresponde à busca.</div>
+    <div class="table-foot"><span>REGISTRO INTERNO DE MATERIAIS</span><span data-search-count>{{ pedidos|length }} exibido{{ pedidos|length|pluralize }}</span></div>
+  {% else %}
+    <div class="empty-state">
+      <span class="empty-number">00</span>
+      <h3>Os pedidos ainda não começaram.</h3>
+      <p>Registre a primeira solicitação de material para organizar o controle.</p>
+      <a class="action-button" href="{% url 'compras:pedido_criar' %}">Registrar pedido <span aria-hidden="true">↗</span></a>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

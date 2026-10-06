@@ -1,0 +1,61 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172d31">
+  <title>{% block title %}Obras · Controle de materiais{% endblock %}</title>
+  <link rel="icon" type="image/svg+xml" href="{% static 'favicon.svg' %}">
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
+  <script src="{% static 'js/site.js' %}" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <div class="app-layout">
+    <aside class="side-panel">
+      <a class="brand" href="{% url 'compras:painel' %}" aria-label="Obras, voltar ao painel">
+        <span class="brand-symbol" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span class="brand-word">OBRAS<small>CONTROLE DE MATERIAIS</small></span>
+      </a>
+
+      <div class="nav-group">
+        <p class="nav-caption">NAVEGAÇÃO</p>
+        <nav aria-label="Navegação principal">
+          <a class="nav-link {% if request.resolver_match.url_name == 'painel' %}is-current{% endif %}" href="{% url 'compras:painel' %}" {% if request.resolver_match.url_name == 'painel' %}aria-current="page"{% endif %}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10 12 3l8.5 7v10a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1V10Z"/><path d="M9 21v-7h6v7"/></svg>
+            <span>Painel</span><span class="nav-number">01</span>
+          </a>
+          <a class="nav-link {% if 'pedido' in request.resolver_match.url_name %}is-current{% endif %}" href="{% url 'compras:pedido_lista' %}" {% if 'pedido' in request.resolver_match.url_name %}aria-current="page"{% endif %}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h10l3 3V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1h2Z"/><path d="M8 10h8M8 14h8M8 18h5"/></svg>
+            <span>Pedidos</span><span class="nav-number">02</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="side-foot">
+        <div class="local-indicator"><span></span> AMBIENTE LOCAL</div>
+        <p>Registro interno do setor de obras.</p>
+        <span class="side-rule"></span>
+        <small>EDIÇÃO 2026 <span>·</span> USO INTERNO</small>
+      </div>
+    </aside>
+
+    <div class="work-area">
+      <header class="top-strip">
+        <div class="breadcrumbs"><span>SETOR DE OBRAS</span><span class="slash">/</span><strong>{% block breadcrumb %}Painel{% endblock %}</strong></div>
+        <div class="top-meta"><span class="today">{% now "d \d\e F \d\e Y" %}</span><span class="top-divider"></span><span class="edition">2026</span></div>
+      </header>
+      <main class="page-content" id="conteudo">
+        {% if messages %}
+          <div class="messages" role="status">
+            {% for message in messages %}<div class="message"><span class="message-mark" aria-hidden="true">✓</span>{{ message }}</div>{% endfor %}
+          </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+      </main>
+      <footer class="page-footer"><span>OBRAS / CONTROLE DE MATERIAIS</span><span>REGISTRO INTERNO · 2026</span></footer>
+    </div>
+  </div>
+</body>
+</html>

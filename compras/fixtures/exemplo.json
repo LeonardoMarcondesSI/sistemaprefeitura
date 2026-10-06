@@ -1,0 +1,6 @@
+[
+  {"model": "compras.fornecedor", "pk": 1, "fields": {"nome": "Serralheria Exemplo Ltda", "documento": ""}},
+  {"model": "compras.processolicitatorio", "pk": 1, "fields": {"numero": "EX-001/2026", "modalidade": "Pregão eletrônico", "numero_licitacao": "EX-009/2026", "saldo_atualizado_em": "2026-10-06"}},
+  {"model": "compras.itemlicitado", "pk": 1, "fields": {"processo": 1, "fornecedor": 1, "numero": 1, "descricao": "Grade metálica para drenagem", "unidade": "unidade", "valor_unitario": "125.0000", "saldo_informado": "25.0000"}},
+  {"model": "compras.pedido", "pk": 1, "fields": {"item": 1, "solicitante": "Encarregado Exemplo", "pessoa_retirada": "Servidor Exemplo", "destino": "Obra demonstrativa", "finalidade": "Manutenção de drenagem", "quantidade": "2.0000", "criado_em": "2026-10-06T12:00:00Z", "atualizado_em": "2026-10-06T12:00:00Z"}}
+]
