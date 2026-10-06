@@ -13,6 +13,18 @@
 - [x] Dados fictícios reproduzíveis com fixture do Django.
 - [x] Views em funções, `ModelForm` e ORM do Django.
 
-## Captura para enviar
+## Capturas da funcionalidade
 
-Abra `http://127.0.0.1:8000/pedidos/` com os dados de exemplo carregados e faça uma captura de tela. Anexe a captura junto da entrega. A geração automática da imagem não pôde ser concluída neste ambiente.
+As imagens abaixo mostram dados fictícios usados apenas para demonstrar o CRUD de pedidos.
+
+### Listagem de pedidos
+
+A lista mostra o pedido cadastrado e as ações de criar, editar e excluir.
+
+![Listagem de pedidos com um registro de exemplo](docs/entrega-semana-2/lista-pedidos.png)
+
+### Edição de pedido
+
+O formulário de edição exibe os dados do pedido e a opção de salvar as alterações.
+
+![Formulário de edição de um pedido de exemplo](docs/entrega-semana-2/editar-pedido.png)
