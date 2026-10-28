@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Consultas · Obras{% endblock %}
+{% block breadcrumb %}Consultas{% endblock %}
+{% block content %}
+<div class="page-intro"><div class="section-kicker"><span class="kicker-line"></span> CONSULTAS / 04</div><div class="intro-row"><div><h1>Encontre cada pedido<span class="title-dot">.</span></h1><p>Combine material, solicitante, destino, processo, fornecedor e período.</p></div></div></div>
+{% include 'compras/_filtros.html' %}
+{% if not form.errors %}
+{% include 'compras/_totais.html' %}
+<div class="section-heading"><div><h2>Resultado da consulta<span class="title-dot">.</span></h2><p>{{ pagina.paginator.count }} pedido{{ pagina.paginator.count|pluralize }} encontrado{{ pagina.paginator.count|pluralize }}.</p></div><a class="quiet-link" href="{% url 'compras:relatorio' %}?{{ filtros_url }}">Ver relatório destes resultados ↗</a></div>
+<section class="data-panel"><div class="table-scroll"><table>
+  <thead><tr><th>PEDIDO / DATA</th><th>SOLICITANTE / DESTINO</th><th>ITEM / PROCESSO</th><th>FORNECEDOR</th><th>QUANTIDADE</th><th>ESTIMATIVA</th></tr></thead>
+  <tbody>{% for pedido in pagina %}<tr><td><span class="row-id">#{{ pedido.pk|stringformat:'04d' }}</span><span class="cell-note">{{ pedido.criado_em|date:'d/m/Y' }}</span></td><td><span class="cell-main">{{ pedido.solicitante }}</span><span class="cell-note">{{ pedido.destino }}</span></td><td><span class="cell-main">{{ pedido.item.descricao }}</span><span class="cell-note">{{ pedido.item.processo.numero }}</span></td><td>{{ pedido.item.fornecedor.nome }}</td><td class="quantity">{{ pedido.quantidade|floatformat:-4 }} <span>{{ pedido.item.unidade }}</span></td><td class="value">R$ {{ pedido.valor_estimado|floatformat:2 }}</td></tr>{% empty %}<tr><td colspan="6">Nenhum pedido encontrado. Ajuste ou limpe os filtros.</td></tr>{% endfor %}</tbody>
+</table></div></section>
+{% if pagina.has_other_pages %}<nav class="pagination" aria-label="Páginas dos resultados">{% if pagina.has_previous %}<a class="secondary-button" href="?{{ filtros_url }}&page={{ pagina.previous_page_number }}">Anterior</a>{% endif %}<span>Página {{ pagina.number }} de {{ pagina.paginator.num_pages }}</span>{% if pagina.has_next %}<a class="secondary-button" href="?{{ filtros_url }}&page={{ pagina.next_page_number }}">Próxima</a>{% endif %}</nav>{% endif %}
+{% endif %}
+{% endblock %}

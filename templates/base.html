@@ -22,6 +22,7 @@
       <div class="nav-group">
         <p class="nav-caption">NAVEGAÇÃO</p>
         <nav aria-label="Navegação principal">
+          {% if user.is_authenticated %}
           <a class="nav-link {% if request.resolver_match.url_name == 'painel' %}is-current{% endif %}" href="{% url 'compras:painel' %}" {% if request.resolver_match.url_name == 'painel' %}aria-current="page"{% endif %}>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10 12 3l8.5 7v10a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1V10Z"/><path d="M9 21v-7h6v7"/></svg>
             <span>Painel</span><span class="nav-number">01</span>
@@ -30,7 +31,19 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h10l3 3V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1h2Z"/><path d="M8 10h8M8 14h8M8 18h5"/></svg>
             <span>Pedidos</span><span class="nav-number">02</span>
           </a>
+          <a class="nav-link {% if 'fornecedor' in request.resolver_match.url_name %}is-current{% endif %}" href="{% url 'compras:fornecedor_lista' %}"><span>Fornecedores</span><span class="nav-number">03</span></a>
+          <a class="nav-link {% if request.resolver_match.url_name == 'consultas' %}is-current{% endif %}" href="{% url 'compras:consultas' %}"><span>Consultas</span><span class="nav-number">04</span></a>
+          <a class="nav-link {% if request.resolver_match.url_name == 'relatorio' %}is-current{% endif %}" href="{% url 'compras:relatorio' %}"><span>Relatórios</span><span class="nav-number">05</span></a>
+          <a class="nav-link {% if request.resolver_match.url_name == 'perfil' %}is-current{% endif %}" href="{% url 'compras:perfil' %}"><span>Meu perfil</span><span class="nav-number">06</span></a>
+          {% else %}
+          <a class="nav-link is-current" href="{% url 'compras:login' %}">Entrar no sistema</a>
+          {% endif %}
         </nav>
+        {% if user.is_authenticated %}
+        <div class="session-box"><span>{{ user.get_username }}</span><small>{% if user.is_superuser %}Administrador · todos os pedidos{% else %}Acesso aos seus pedidos{% endif %}</small>
+          <form method="post" action="{% url 'compras:logout' %}">{% csrf_token %}<button type="submit" class="logout-button">Sair da conta</button></form>
+        </div>
+        {% endif %}
       </div>
 
       <div class="side-foot">

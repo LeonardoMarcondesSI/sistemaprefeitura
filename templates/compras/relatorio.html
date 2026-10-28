@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Relatório de pedidos · Obras{% endblock %}
+{% block breadcrumb %}Relatórios{% endblock %}
+{% block content %}
+<div class="page-intro"><div class="section-kicker"><span class="kicker-line"></span> RELATÓRIOS / 05</div><div class="intro-row"><div><h1>Pedidos em números<span class="title-dot">.</span></h1><p>Contagens e valores estimados por fornecedor, com exportação dos resultados.</p></div></div></div>
+{% include 'compras/_filtros.html' %}
+{% if not form.errors %}
+{% include 'compras/_totais.html' %}
+<div class="section-heading"><div><h2>Resumo por fornecedor<span class="title-dot">.</span></h2><p>O CSV inclui todos os resultados dos filtros atuais.</p></div><a class="action-button" href="?{{ filtros_url }}&formato=csv">Exportar CSV ↓</a></div>
+<section class="data-panel"><div class="table-scroll"><table>
+  <thead><tr><th>FORNECEDOR</th><th>PEDIDOS</th><th>VALOR ESTIMADO</th></tr></thead>
+  <tbody>{% for grupo in grupos %}<tr><td class="cell-main">{{ grupo.item__fornecedor__nome }}</td><td>{{ grupo.total_pedidos }}</td><td class="value">R$ {{ grupo.valor_total|floatformat:2 }}</td></tr>{% empty %}<tr><td colspan="3">Nenhum pedido encontrado para os filtros selecionados.</td></tr>{% endfor %}</tbody>
+  <tfoot><tr><td class="cell-main">Total</td><td>{{ totais.total_pedidos }}</td><td class="value">R$ {{ totais.valor_total|floatformat:2 }}</td></tr></tfoot>
+</table></div></section>
+<p class="scope-note">Estimativas calculadas com os valores unitários atuais dos itens. Quantidades de unidades diferentes não são somadas.</p>
+<a class="quiet-link" href="{% url 'compras:consultas' %}?{{ filtros_url }}">Ver os pedidos deste relatório ↗</a>
+{% endif %}
+{% endblock %}

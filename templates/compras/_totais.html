@@ -1,0 +1,6 @@
+<section class="ledger" aria-label="Totais dos pedidos filtrados">
+  <div class="ledger-item"><span class="ledger-label">PEDIDOS</span><div class="ledger-value">{{ totais.total_pedidos }}</div><span class="ledger-note">No resultado dos filtros</span></div>
+  <div class="ledger-item"><span class="ledger-label">PROCESSOS</span><div class="ledger-value">{{ totais.total_processos }}</div><span class="ledger-note">Com pedidos no resultado</span></div>
+  <div class="ledger-item"><span class="ledger-label">FORNECEDORES</span><div class="ledger-value">{{ totais.total_fornecedores }}</div><span class="ledger-note">Com pedidos no resultado</span></div>
+  <div class="ledger-item amount"><span class="ledger-label">VALOR ESTIMADO</span><div class="ledger-value"><small>R$</small> {{ totais.valor_total|floatformat:2 }}</div><span class="ledger-note">Quantidade × valor unitário</span></div>
+</section>

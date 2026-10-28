@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Fornecedores · Obras{% endblock %}
+{% block breadcrumb %}Fornecedores{% endblock %}
+{% block content %}
+<div class="page-intro">
+  <div class="section-kicker"><span class="kicker-line"></span> CADASTROS / 03</div>
+  <div class="intro-row"><div><h1>Fornecedores<span class="title-dot">.</span></h1><p>Catálogo compartilhado. Você pode editar os fornecedores que cadastrou.</p></div><a class="action-button" href="{% url 'compras:fornecedor_criar' %}">Novo fornecedor</a></div>
+</div>
+<div class="list-toolbar"><div class="list-total"><strong>{{ fornecedores|length }}</strong><span>fornecedor{{ fornecedores|length|pluralize:"es" }} no catálogo</span></div></div>
+<section class="data-panel"><div class="table-scroll"><table>
+  <thead><tr><th>NOME</th><th>DOCUMENTO</th><th>CADASTRADO POR</th><th>AÇÕES</th></tr></thead>
+  <tbody>{% for fornecedor in fornecedores %}<tr>
+    <td class="cell-main">{{ fornecedor.nome }}</td><td>{{ fornecedor.documento|default:'Não informado' }}</td><td>{{ fornecedor.criado_por.username|default:'Cadastro anterior' }}</td>
+    <td>{% if user.is_superuser or fornecedor.criado_por_id == user.id %}<div class="row-actions"><a href="{% url 'compras:fornecedor_editar' fornecedor.pk %}">Editar</a><a class="delete-link" href="{% url 'compras:fornecedor_excluir' fornecedor.pk %}">Excluir</a></div>{% else %}<span class="cell-note">Somente consulta</span>{% endif %}</td>
+  </tr>{% empty %}<tr><td colspan="4">Nenhum fornecedor cadastrado. Use “Novo fornecedor” para começar.</td></tr>{% endfor %}</tbody>
+</table></div></section>
+{% endblock %}

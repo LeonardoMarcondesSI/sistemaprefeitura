@@ -1,8 +1,13 @@
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 
 
 class Fornecedor(models.Model):
+    criado_por = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
+        null=True, blank=True, related_name='fornecedores_criados',
+    )
     nome = models.CharField(max_length=180)
     documento = models.CharField(max_length=20, blank=True)
 
@@ -16,6 +21,9 @@ class Fornecedor(models.Model):
 
 
 class ProcessoLicitatorio(models.Model):
+    fornecedores = models.ManyToManyField(
+        Fornecedor, through='ItemLicitado', related_name='processos',
+    )
     numero = models.CharField(max_length=30, unique=True)
     modalidade = models.CharField(max_length=80)
     numero_licitacao = models.CharField(max_length=30)
@@ -62,6 +70,10 @@ class ItemLicitado(models.Model):
         )
 
 class Pedido(models.Model):
+    criado_por = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
+        null=True, blank=True, related_name='pedidos_criados',
+    )
     item = models.ForeignKey(
         ItemLicitado, on_delete=models.PROTECT, related_name='pedidos'
     )
@@ -101,3 +113,18 @@ class Pedido(models.Model):
                     'informado para este item.'
                 )
             })
+
+
+class Perfil(models.Model):
+    usuario = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='perfil',
+    )
+    setor = models.CharField(max_length=120, blank=True)
+    telefone = models.CharField(max_length=30, blank=True)
+
+    class Meta:
+        verbose_name = 'perfil'
+        verbose_name_plural = 'perfis'
+
+    def __str__(self):
+        return f'Perfil de {self.usuario.get_username()}'

@@ -1,0 +1,5 @@
+<form method="get" class="filter-sheet" novalidate aria-label="Filtros de pedidos">
+  {% include 'compras/_campos.html' %}
+  <div class="filter-actions"><button class="action-button" type="submit">Aplicar filtros</button><a class="secondary-button" href="{{ request.path }}">Limpar filtros</a></div>
+</form>
+<p class="scope-note">{% if user.is_superuser %}Visão administrativa: todos os pedidos.{% else %}Resultados limitados aos pedidos da sua conta.{% endif %} As datas consideram o horário de São Paulo.</p>

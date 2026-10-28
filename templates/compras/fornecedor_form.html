@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}{{ titulo }} · Obras{% endblock %}
+{% block breadcrumb %}{{ titulo }}{% endblock %}
+{% block content %}
+<div class="form-layout">
+  <div class="form-context"><a class="return-link" href="{% url 'compras:fornecedor_lista' %}">← Voltar aos fornecedores</a><div class="section-kicker"><span class="kicker-line"></span> CADASTRO</div><h1>{{ titulo }}<span class="title-dot">.</span></h1><p>Informe os dados do fornecedor. A vinculação aos processos e materiais é feita no cadastro de itens pelo administrador.</p></div>
+  <form method="post" class="form-sheet" novalidate>{% csrf_token %}<div class="sheet-section">{% include 'compras/_campos.html' %}</div><div class="sheet-actions"><a class="secondary-button" href="{% url 'compras:fornecedor_lista' %}">Cancelar</a><button class="action-button" type="submit">Salvar fornecedor</button></div></form>
+</div>
+{% endblock %}

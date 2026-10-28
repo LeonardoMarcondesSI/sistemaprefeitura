@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Meu perfil · Obras{% endblock %}
+{% block breadcrumb %}Meu perfil{% endblock %}
+{% block content %}
+<div class="form-layout">
+  <div class="form-context"><div class="section-kicker"><span class="kicker-line"></span> ÁREA RESTRITA</div><h1>Meu perfil<span class="title-dot">.</span></h1><p>Seus dados pessoais e de contato no setor de obras.</p><dl class="profile-summary"><dt>Usuário</dt><dd>{{ user.username }}</dd><dt>Nome</dt><dd>{{ user.get_full_name|default:'Não informado' }}</dd><dt>Setor</dt><dd>{{ perfil_usuario.setor|default:'Não informado' }}</dd><dt>Telefone</dt><dd>{{ perfil_usuario.telefone|default:'Não informado' }}</dd><dt>Tipo de acesso</dt><dd>{% if user.is_superuser %}Administrador{% else %}Usuário{% endif %}</dd></dl></div>
+  <form method="post" class="form-sheet" novalidate>{% csrf_token %}
+    <div class="sheet-section"><div class="sheet-heading"><span class="sheet-number">01</span><h2>Dados da conta</h2></div>{% include 'compras/_campos.html' with form=usuario_form %}</div>
+    <div class="sheet-section"><div class="sheet-heading"><span class="sheet-number">02</span><h2>Contato e setor</h2></div>{% include 'compras/_campos.html' with form=perfil_form %}</div>
+    <div class="sheet-actions"><button class="action-button" type="submit">Salvar meu perfil</button></div>
+  </form>
+</div>
+{% endblock %}

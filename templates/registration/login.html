@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Entrar · Obras{% endblock %}
+{% block breadcrumb %}Acesso ao sistema{% endblock %}
+{% block content %}
+<div class="form-layout">
+  <div class="form-context">
+    <div class="section-kicker"><span class="kicker-line"></span> ACESSO RESTRITO</div>
+    <h1>Entre para continuar<span class="title-dot">.</span></h1>
+    <p>Acompanhe seus pedidos, consulte materiais e gere relatórios do setor de obras.</p>
+    <div class="context-rule"></div><p>Use a conta fornecida pelo administrador do sistema.</p>
+  </div>
+  <form method="post" class="form-sheet" novalidate>
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}">
+    <div class="sheet-section">{% include 'compras/_campos.html' %}</div>
+    <div class="sheet-actions"><button class="action-button" type="submit">Entrar</button></div>
+  </form>
+</div>
+{% endblock %}

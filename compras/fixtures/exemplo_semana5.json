@@ -1,0 +1,88 @@
+[
+  {
+    "model": "compras.fornecedor",
+    "pk": 2,
+    "fields": {
+      "nome": "Materiais Horizonte (fictício)",
+      "documento": ""
+    }
+  },
+  {
+    "model": "compras.processolicitatorio",
+    "pk": 2,
+    "fields": {
+      "numero": "EX-002/2026",
+      "modalidade": "Pregão eletrônico",
+      "numero_licitacao": "EX-010/2026",
+      "saldo_atualizado_em": "2026-10-28"
+    }
+  },
+  {
+    "model": "compras.itemlicitado",
+    "pk": 2,
+    "fields": {
+      "processo": 2,
+      "fornecedor": 2,
+      "numero": 1,
+      "descricao": "Areia média lavada",
+      "unidade": "m³",
+      "valor_unitario": "145.5000",
+      "saldo_informado": "100.0000"
+    }
+  },
+  {
+    "model": "compras.itemlicitado",
+    "pk": 3,
+    "fields": {
+      "processo": 2,
+      "fornecedor": 2,
+      "numero": 2,
+      "descricao": "Cimento CP II - saco de 50 kg",
+      "unidade": "saco",
+      "valor_unitario": "38.9000",
+      "saldo_informado": "200.0000"
+    }
+  },
+  {
+    "model": "compras.pedido",
+    "pk": 2,
+    "fields": {
+      "item": 2,
+      "solicitante": "Equipe de Obras (exemplo)",
+      "pessoa_retirada": "Servidor fictício",
+      "destino": "Praça demonstrativa",
+      "finalidade": "Demonstração acadêmica",
+      "quantidade": "4.0000",
+      "criado_em": "2026-10-28T18:05:03.383Z",
+      "atualizado_em": "2026-10-28T18:05:03.383Z"
+    }
+  },
+  {
+    "model": "compras.pedido",
+    "pk": 3,
+    "fields": {
+      "item": 3,
+      "solicitante": "Equipe de Manutenção (exemplo)",
+      "pessoa_retirada": "Servidor fictício",
+      "destino": "Calçada demonstrativa",
+      "finalidade": "Demonstração acadêmica",
+      "quantidade": "12.0000",
+      "criado_em": "2026-10-28T18:05:03.383Z",
+      "atualizado_em": "2026-10-28T18:05:03.383Z"
+    }
+  },
+  {
+    "model": "compras.pedido",
+    "pk": 4,
+    "fields": {
+      "item": 1,
+      "solicitante": "Equipe de Obras (exemplo)",
+      "pessoa_retirada": "Servidor fictício",
+      "destino": "Drenagem demonstrativa",
+      "finalidade": "Demonstração acadêmica",
+      "quantidade": "3.0000",
+      "criado_em": "2026-10-28T18:05:03.383Z",
+      "atualizado_em": "2026-10-28T18:05:03.383Z"
+    }
+  }
+]

@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block title %}Excluir fornecedor · Obras{% endblock %}
+{% block breadcrumb %}Excluir fornecedor{% endblock %}
+{% block content %}
+<div class="confirm-layout"><div class="confirm-sheet"><div class="section-kicker">FORNECEDOR / EXCLUSÃO</div><div class="confirm-symbol" aria-hidden="true">×</div><h1>Excluir este fornecedor?</h1><p>O cadastro de <strong>{{ fornecedor.nome }}</strong> será excluído. Fornecedores com itens licitados vinculados precisam ser mantidos no catálogo.</p><form method="post" class="confirm-actions">{% csrf_token %}<a class="secondary-button" href="{% url 'compras:fornecedor_lista' %}">Manter fornecedor</a><button class="danger-button" type="submit">Excluir fornecedor</button></form></div></div>
+{% endblock %}
